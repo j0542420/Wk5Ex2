@@ -6,33 +6,73 @@ using System.Threading.Tasks;
 
 namespace Wk5Ex2
 {
-    //lists for contacts names and their numbers
-    static Dictionary<string, int> contact = new Dictionary<string, int>(); 
     internal class Program
     {
+        //lists for contacts names and their numbers
+        static Dictionary<string, string> contacts = new Dictionary<string, string>();
+
+        //method to add a contact
         static void addContact()
         {
-            Console.WriteLine("Please add a Contact Name");
+            //asking the user to add a name to the contact list
+            Console.WriteLine("Please add a Contact Name: ");
+            //user inputs a name to the list
             string name = Console.ReadLine();
 
+            //contact name cant be empty
+            if (name == null)
+            {
+                Console.WriteLine("Contact name can't be found");
+                return;
+            }
+
+            //letting user know if they already used that name
+            if (contacts.ContainsKey(name))
+            {
+                Console.WriteLine("Contact already exists.");
+                return;
+            }
+
+            //asking user to add a number to the contact name
             Console.WriteLine("PLease enter a phone number");
-            int phone = Convert.ToInt32(Console.ReadLine());
+            //user adds a number
+            string phone = Console.ReadLine();
 
-            
-
-            contacts[name] = phone; 
+            //
+            contacts[name] = phone;
+            Console.WriteLine("Contact was successfully added");
         }
-        static void removeContact() 
+        static void removeContact()
         {
-        
+            Console.WriteLine("Enter a contact to Remove");
+            string name = Console.ReadLine();
+            if (contacts.Remove(name))
+            { 
+                Console.WriteLine("Contact was removed");
+            }
         }
         static void searchContact()
         {
-
+            Console.WriteLine("Enter contact name to search for");
+            string name = Console.ReadLine();
+            if (contacts.TryGetValue(name, out string phone))
+            { 
+                Console.WriteLine(name + " " + phone);
+            }
         }
         static void displayContacts()
-        { 
-        
+        {
+            if (contacts.Count == 0)
+            { 
+                Console.WriteLine("There are no contacts to show");
+            }
+            else
+            {
+                foreach (KeyValuePair<string, string> pair in contacts)
+                {
+                    Console.WriteLine($"{contacts.Keys}: {contacts.Values}");
+                }
+            }
         }
         static void Main(string[] args)
         {
@@ -73,6 +113,7 @@ namespace Wk5Ex2
                         Console.WriteLine("Invalid choice, please try again");
                         break;
                 }
+            }
         }
     }
 }
