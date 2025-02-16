@@ -38,38 +38,53 @@ namespace Wk5Ex2
             //user adds a number
             string phone = Console.ReadLine();
 
-            //
+            //connecting both the name and the number that was inputted together
             contacts[name] = phone;
+            //message to let user know that their contact was saved
             Console.WriteLine("Contact was successfully added");
         }
+        //method to remove a contact
         static void removeContact()
         {
+            //message to let the user know that they can remove a contact
             Console.WriteLine("Enter a contact to Remove");
+            //user inputs a contact name to remove from the list
             string name = Console.ReadLine();
+            //removing data from the list that had that name
             if (contacts.Remove(name))
             { 
                 Console.WriteLine("Contact was removed");
             }
         }
+        //method to search for a contact
         static void searchContact()
         {
+            //message to let the user know that they can search for a name
             Console.WriteLine("Enter contact name to search for");
+            //user inputs a name
             string name = Console.ReadLine();
+            //searching for the name and number that user inputted
             if (contacts.TryGetValue(name, out string phone))
             { 
+                //outputs the name and number that the user inputted
                 Console.WriteLine(name + " " + phone);
             }
         }
+        //method to show all of their contacts
         static void displayContacts()
         {
+            //shows a message if there are no contacts to show
             if (contacts.Count == 0)
             { 
                 Console.WriteLine("There are no contacts to show");
             }
+            //if true
             else
             {
+                //searches for all of the contacts that the user inputted into the list
                 foreach (KeyValuePair<string, string> pair in contacts)
                 {
+                    //shows the contacts that are in the list
                     Console.WriteLine($"{contacts.Keys}: {contacts.Values}");
                 }
             }
