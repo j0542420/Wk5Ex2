@@ -1,15 +1,67 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Wk5Ex2
 {
+    class contact //prototype/ custome data type
+    {
+        //properties of the class/ object
+        public string name;
+        public string phone;
+        public string email;
+        public string lastcall = "";
+
+        //setter and getter
+        public string GetName()
+        {
+            return name;
+        }
+
+        public void SetName(string name)
+        {
+            name = aName;
+        }
+
+        public string Name { get; set; }
+
+        public string phone { get; set; }
+
+        public string MyProperty { get; set; }
+
+        public string Email { get; set; }
+
+        //contructor to initiate the object
+        public contact(string aName, string aPhone, string aEmail, string aLastcall)
+        {
+            name = aName;
+            phone = aPhone;
+            email = aEmail;
+            lastcall = aLastcall;
+        }
+
+        //behavior/action
+
+        public void UpdateContact(string aName, string aPhone, string aEmail, string aLastcall)
+        {
+            name = aName;
+            phone = aPhone;
+            email = aEmail;
+            lastcall = aLastcall;
+        }
+
+        public void print()
+        {
+            Console.WriteLine($"{name} -- {phone} -- {email} -- {lastcall} ");
+        }
+    }
     internal class Program
     {
         //lists for contacts names and their numbers
-        static Dictionary<string, string> contacts = new Dictionary<string, string>();
+        static Dictionary<string, contact> contacts = new Dictionary<string, contact>();
 
         //method to add a contact
         static void addContact()
@@ -23,6 +75,20 @@ namespace Wk5Ex2
             Console.WriteLine("PLease enter a phone number");
             //user adds a number
             string phone = Console.ReadLine();
+
+            //asking user to add a number to the contact name
+            Console.WriteLine("PLease enter a email number");
+            //user adds a number
+            string email = Console.ReadLine();
+
+            //asking user to add a number to the contact name
+            Console.WriteLine("PLease enter a lastcall number");
+            //user adds a number
+            string lastcall = Console.ReadLine();
+
+            List<string> aList = new List<string>(); //how to create a list from a class
+
+            contact aContact = new contact(name, phone, email, lastcall)
 
             //letting user know if they already used that name
             if (contacts.ContainsKey(name))
@@ -63,12 +129,12 @@ namespace Wk5Ex2
             //user inputs a name
             string name = Console.ReadLine();
             //searching for the name and number that user inputted
-            foreach (KeyValuePair<string, string> pair in contacts)
+            foreach (KeyValuePair<string, contact> pair in contacts)
             {
                 if (contacts.Keys.Contains(name))
                 {
                     //outputs the name and number that the user inputted
-                    Console.WriteLine(name + " " + phone);
+                    ;
                 }
             }
         }
@@ -76,25 +142,63 @@ namespace Wk5Ex2
         static void displayContacts()
         {
             //shows a message if there are no contacts to show
-            if (contacts.Count == 0)
-            { 
-                Console.WriteLine("There are no contacts to show");
-            }
-            //if true
-            else
+            if (contacts.Count > 0)
             {
+
                 //searches for all of the contacts that the user inputted into the list
-                foreach (KeyValuePair<string, string> pair in contacts)
+                foreach (KeyValuePair<string, contact> kvp in contacts)
                 {
                     //shows the contacts that are in the list
-                    Console.WriteLine($"{contacts.Keys}: {contacts.Values}");
+                    Console.WriteLine($"{kvp.Key}: {kvp.Value}");
                 }
             }
+            else
+            { 
+            
+            }
+        }
+        static void upDateContact()
+        {
+            //asking the user to add a name to the contact list
+            Console.WriteLine("Please add a Contact Name: ");
+            //user inputs a name to the list
+            string name = Console.ReadLine();
+
+            //asking user to add a number to the contact name
+            Console.WriteLine("PLease enter a phone number");
+            //user adds a number
+            string phone = Console.ReadLine();
+
+            //asking user to add a number to the contact name
+            Console.WriteLine("PLease enter a email number");
+            //user adds a number
+            string email = Console.ReadLine();
+
+            //asking user to add a number to the contact name
+            Console.WriteLine("PLease enter a lastcall number");
+            //user adds a number
+            string lastcall = Console.ReadLine();
+
+            List<string> aList = new List<string>(); //how to create a list from a class
+
+            contact aContact = new contact(name, phone, email, lastcall)
+
+            //letting user know if they already used that name
+             foreach (KeyValuePair<string, contact> kvp in contacts)
+            {
+              if (kvp.Key == name)
+             {
+                 //kvp.Value is a Contact
+                 kvp.Value.UpdateContact(name, phone, email, lastcall)
+                 //kvp.Value.phone = phone;
+                 //kvp.Value.email = email;
+                 //kvp.Value.lastcall = lastcall;
+             }
         }
         static void Main(string[] args)
         {
-            Console.BackgroundColor = ConsoleColor.Blue;
-            Console.ForegroundColor = ConsoleColor.Red;
+            //Console.BackgroundColor = ConsoleColor.Blue;
+            //Console.ForegroundColor = ConsoleColor.Red;
             //menu for Contact Management Application
             //Looping through the menu so user can keep using it
 
