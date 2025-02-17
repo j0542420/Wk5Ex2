@@ -19,29 +19,23 @@ namespace Wk5Ex2
             //user inputs a name to the list
             string name = Console.ReadLine();
 
-            //contact name cant be empty
-            if (name == null)
-            {
-                Console.WriteLine("Contact name can't be found");
-                return;
-            }
-
-            //letting user know if they already used that name
-            if (contacts.ContainsKey(name))
-            {
-                Console.WriteLine("Contact already exists.");
-                return;
-            }
-
             //asking user to add a number to the contact name
             Console.WriteLine("PLease enter a phone number");
             //user adds a number
             string phone = Console.ReadLine();
 
-            //connecting both the name and the number that was inputted together
-            contacts[name] = phone;
-            //message to let user know that their contact was saved
-            Console.WriteLine("Contact was successfully added");
+            //letting user know if they already used that name
+            if (contacts.ContainsKey(name))
+            {
+                Console.WriteLine($"Contact {name} already exists.");
+                return;
+            }
+            else
+            {
+                contacts.Add(name, phone);
+                Console.WriteLine($"Contact {name} added.");
+
+            }
         }
         //method to remove a contact
         static void removeContact()
@@ -51,9 +45,14 @@ namespace Wk5Ex2
             //user inputs a contact name to remove from the list
             string name = Console.ReadLine();
             //removing data from the list that had that name
-            if (contacts.Remove(name))
+            if (!contacts.ContainsKey(name))
+            {
+                Console.WriteLine($"Contact {name} does not exists.");
+                return;
+            }
+            else (contacts.Remove(name))
             { 
-                Console.WriteLine("Contact was removed");
+                Console.WriteLine($"Contact {name}was removed");
             }
         }
         //method to search for a contact
@@ -64,10 +63,13 @@ namespace Wk5Ex2
             //user inputs a name
             string name = Console.ReadLine();
             //searching for the name and number that user inputted
-            if (contacts.TryGetValue(name, out string phone))
-            { 
-                //outputs the name and number that the user inputted
-                Console.WriteLine(name + " " + phone);
+            foreach (KeyValuePair<string, string> pair in contacts)
+            {
+                if (contacts.Keys.Contains(name))
+                {
+                    //outputs the name and number that the user inputted
+                    Console.WriteLine(name + " " + phone);
+                }
             }
         }
         //method to show all of their contacts
@@ -91,37 +93,44 @@ namespace Wk5Ex2
         }
         static void Main(string[] args)
         {
+            Console.BackgroundColor = ConsoleColor.Blue;
+            Console.ForegroundColor = ConsoleColor.Red;
             //menu for Contact Management Application
             //Looping through the menu so user can keep using it
 
             while (true)
             {
                 Console.WriteLine("Welcome to Contact Management Application");
-                Console.WriteLine("1 - Add a contact");
-                Console.WriteLine("2 - Remove a contact");
-                Console.WriteLine("3 - Search for a contact");
-                Console.WriteLine("4 - Display all contacts");
-                Console.WriteLine("5 - EXIT");
+                Console.WriteLine("Please input a number to select an option below.\n" +
+                    "1 - Add a contact\n" +
+                    "2 - Remove a contact\n" +
+                    "3 - Search for a contact\n" +
+                    "4 - Display all contacts\n" +
+                    "5 - EXIT");
 
                 //user choses witch method they want to chose
                 //declaration
-                string choice = Console.ReadLine();
+                int choice = Convert.ToInt32(Console.ReadLine());
 
                 switch (choice)
                 {
-                    case "1":
+                    case 1:
+                        //process to add a contact
                         addContact();
                         break;
-                    case "2":
+                    case 2:
+                        //proces to remove contact
                         removeContact();
                         break;
-                    case "3":
+                    case 3:
+                        //process to search contact
                         searchContact();
                         break;
-                    case "4":
+                    case 4:
+                        //process to display all contacts
                         displayContacts();
                         break;
-                    case "5":
+                    case 5:
                         Console.WriteLine("Closing the program....");
                         return;
                     default:
